@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "ADHD Bionic Mode",
+  "description": "Bionic mode for reader with ADHD. This extension helps users to keep focus.",
+  "version": "1.0.0",
+  "icons": {
+    "128": "icons/icon.png"
+  },
+  "action": {
+    "default_icon": {
+      "32": "icons/icon.png"
+    },
+    "default_popup": "index.html",
+    "default_title": "Open Popup"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "permissions": ["activeTab", "nativeMessaging", "tabs"]
+}
