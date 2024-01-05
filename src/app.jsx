@@ -9,23 +9,10 @@ const App = () => {
   const [messageFromContent, setMessageFromContent] = useState("");
 
   useEffect(() => {
-    console.log("messageFromContent:", messageFromContent);
+    // console.log("messageFromContent:", messageFromContent);
   }, [messageFromContent]);
 
-  useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { type: "images" }, function (response) {
-        console.log("response:", response);
-        response.map((img, i) => {
-          console.log(img);
-        });
-      });
-    });
-    return () => {
-      // Clean up the listener when the component unmounts
-      // chrome.runtime.onMessage.removeListener(handleMessage);
-    };
-  }, []);
+
 
   return (
     <div className="App" data-testid="app">

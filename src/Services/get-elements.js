@@ -1,4 +1,4 @@
-function myCal() {
-  const nodes = window.getElementsByTagName("p");
-  return console.log(nodes);
+export function myCal() {
+  const nodes = document.getElementsByTagName("p");
+  return nodes
 }
