@@ -12,8 +12,6 @@ const App = () => {
     // console.log("messageFromContent:", messageFromContent);
   }, [messageFromContent]);
 
-
-
   return (
     <div className="App" data-testid="app">
       <section className="content">

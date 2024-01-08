@@ -1,7 +1,7 @@
 {
-  "name": "extension-kit",
+  "name": "ADHD-Extension",
   "version": "1.0.0",
-  "description": "Starter template built with ExtensionKit",
+  "description": "Bionic mode for reader with ADHD. This extension helps users to keep focus.",
   "scripts": {
     "assemble": "npm run build && node scripts/assemble.js",
     "build": "node scripts/build.js",
