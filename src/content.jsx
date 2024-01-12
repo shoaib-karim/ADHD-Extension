@@ -49,9 +49,4 @@ function emphasizeHalf(text) {
   return emphasizedText;
 }
 
-// Example usage:
-const originalText = "A template that allows easy task assignment to different team members is essential. For example, new clients could automatically be assigned to an account manager and then passed on to a video scriptwriter.";
-
-const emphasizedText = emphasizeHalf(originalText);
-console.log(emphasizedText);
 
