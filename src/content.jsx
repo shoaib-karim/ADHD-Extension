@@ -3,61 +3,55 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === "documents") {
     // Get the array of texts from the response
-    const textArray = request.textArray;
+  
 
     // Inject a script into the page to modify the style
-    chrome.tabs.executeScript(
-      {
-        code: `
-        
-        const textArray = ${JSON.stringify(textArray)};
-        const elements = document.querySelectorAll('p');
 
-        elements.forEach((element, index) => {
-          
-          if (index < textArray.length) {
-            const words = textArray[index].text.split(' ');
+    if (request["type"] == "documents") {
+      let elements = document.querySelectorAll('p');
+      elements = Array.from(elements);
+      elements.forEach((element, index) => {
+        // console.log("element:",index, element.innerHTML);
 
-            
-            const halfLength = Math.ceil(words.length / 2);
-            const firstHalf = words.slice(0, halfLength).join(' ');
-            const secondHalf = words.slice(halfLength).join(' ');
+        element.innerHTML = emphasizeHalf(element.innerHTML);
+      });
 
-            element.innerHTML = '<b>' + firstHalf + '</b>' + ' ' + secondHalf;
-          }
-        });
-        chrome.runtime.sendMessage({ type: "contentScriptComplete" });
-      `,
-      },
-      () => {
-        return true;
-      }
-    );
+      // console.log("")
 
-    // if (request["type"] == "documents") {
-    //   let elements = myCal();
-    //   elements = Array.from(elements);
-    //   // let pArray = [];
-    //   // elements?.map((e, i) => {
-    //   //   let x = { index: i, text: e.innerText };
-    //   //   pArray.push(x);
-    //   // });
-
-    //   // console.log("Content sending response:", pArray);
-
-    //   // setTimeout(() => {
-    //   //   sendResponse(pArray);
-    //   // }, 0); // this is how you send message to popup
-
-    //   elements?.forEach((e, i) => {
-    //     e.style.fontWeight = "bold !important";
-    //   });
-
-    //   setTimeout(() => {
-    //     sendResponse({ success: true });
-    //   }, 0);
-    // }
-    // sendResponse({ success: true });
+      setTimeout(() => {
+        sendResponse({ success: true });
+      }, 0);
+    }
+    sendResponse({ success: true });
     return true; // this make sure sendResponse will work asynchronously
   }
 });
+
+function emphasizeHalf(text) {
+  // Split the text into words
+  const words = text.split(/\s+/);
+
+  // Process each word
+  const emphasizedWords = words.map(word => {
+    const length = word.length;
+    const halfLength = Math.ceil(length / 2);
+
+    // Wrap the first half of the word in <b> tags
+    const emphasizedWord =
+      '<b>' + word.substring(0, halfLength) + '</b>' + word.substring(halfLength);
+
+    return emphasizedWord;
+  });
+
+  // Join the words back into a sentence
+  const emphasizedText = emphasizedWords.join(' ');
+
+  return emphasizedText;
+}
+
+// Example usage:
+const originalText = "A template that allows easy task assignment to different team members is essential. For example, new clients could automatically be assigned to an account manager and then passed on to a video scriptwriter.";
+
+const emphasizedText = emphasizeHalf(originalText);
+console.log(emphasizedText);
+
