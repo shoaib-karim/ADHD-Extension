@@ -6,12 +6,16 @@ export const ActionToggle = () => {
   const actionToggle = () => {
     setChecked(!isChecked);
 
-    chrome.tabs.query({ active: true, currentWindow: true }, function (activeTabs, response) {
-      chrome.tabs.sendMessage(activeTabs[0].id, { type: "documents" }, function (response) {
-        console.log("response:", response);
+    // Send a message to content.js with the type and checked status
+    chrome.tabs.query({ active: true, currentWindow: true }, function (activeTabs) {
+      chrome.tabs.sendMessage(activeTabs[0].id, {
+        type: "documents",
+        action: "toggle",
+        checked: !isChecked,
       });
     });
   };
+
   return (
     <>
       <input
